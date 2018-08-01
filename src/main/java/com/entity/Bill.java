@@ -1,5 +1,7 @@
 package com.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -30,7 +32,17 @@ public class Bill {
 
     private Long providerid;
 
+    private String proname;
+
     private Provider provider;
+
+    public String getProname() {
+        return proname;
+    }
+
+    public void setProname(String proname) {
+        this.proname = proname;
+    }
 
     public Provider getProvider() {
         return provider;
@@ -115,7 +127,7 @@ public class Bill {
     public Date getCreationdate() {
         return creationdate;
     }
-
+    @DateTimeFormat( pattern = "yyyy-MM-dd")
     public void setCreationdate(Date creationdate) {
         this.creationdate = creationdate;
     }
@@ -131,7 +143,7 @@ public class Bill {
     public Date getModifydate() {
         return modifydate;
     }
-
+    @DateTimeFormat( pattern = "yyyy-MM-dd")
     public void setModifydate(Date modifydate) {
         this.modifydate = modifydate;
     }
@@ -142,5 +154,26 @@ public class Bill {
 
     public void setProviderid(Long providerid) {
         this.providerid = providerid;
+    }
+
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "id=" + id +
+                ", billcode='" + billcode + '\'' +
+                ", productname='" + productname + '\'' +
+                ", productdesc='" + productdesc + '\'' +
+                ", productunit='" + productunit + '\'' +
+                ", productcount=" + productcount +
+                ", totalprice=" + totalprice +
+                ", ispayment=" + ispayment +
+                ", createdby=" + createdby +
+                ", creationdate=" + creationdate +
+                ", modifyby=" + modifyby +
+                ", modifydate=" + modifydate +
+                ", providerid=" + providerid +
+                ", proname='" + proname + '\'' +
+                ", provider=" + provider +
+                '}';
     }
 }

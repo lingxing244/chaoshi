@@ -12,7 +12,7 @@
 			}
 		</style>
 	</head>
-	<body>
+	<body style="margin:0;padding:0">
 		<div>
 			<div style="border: 1px solid #E6EAF6;padding-left:22px;height: 26px;"><img src="img/home.png" style="vertical-align: middle;margin-right: 10px;"/>你现在所在的位置是：<span style="color:#2179A9;">订单管理页面</span></div>
 			<!--form表单-->
@@ -33,23 +33,59 @@
 				</form>
 			</div>
 			<!--订单信息详情-->
-			<table id="dg"></table>
+			<div style="height: 350px">
+				<table id="dg"></table>
+			</div>
 		</div>
 	</body>
 </html>
 <script type="text/javascript" src="js/jquery-1.12.4.js"></script>
 <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
 <script type="text/javascript">
-	alert(111);
     $('#dg').datagrid({
         url:'selectAll',
+		fit:true,
+        fitColumns:true,
         columns:[[
-            {field:'billcode',title:'订单编号',width:100},
-            {field:'productname',title:'商品名称',width:100},
-            {field:'provider',title:'供应商',width:100,align:'right'}
+            {field:'billcode',title:'订单编号',align:'center'},
+            {field:'productname',title:'商品名称',width:100,align:'center'},
+            {field:'proname',title:'供应商',width:150,align:'center'},
+            {field:'totalprice',title:'订单金额',align:'center'},
+            {field:'ispayment',title:'是否付款',align:'center'},
+            {field:'creationdate',title:'创建时间',width:100,align:'center',formatter:function(value,row,index){
+                var dt = new Date(value);
+                var ds = myformatter(dt);
+                row.joinTime = ds;
+                return ds;
+            }},
+            {field:'action',title:'操作',width:150,align:'center',
+					formatter:function(value,row,index){
+                		if(row.editing){
+
+						}else {
+                            var e = '<a href="javascript:void(0)" onclick="editrow('+index+')"><img src="img/read.png"></a> ';
+                            var d = '<a href="javascript:void(0)" onclick="editrow('+index+')"><img src="img/xiugai.png"></a> ';
+                            var c = '<a href="javascript:void(0)" onclick="deleterow('+index+')"><img src="img/schu.png"></a>';
+                            return e+d+c;
+						}
+					}
+			}
         ]],
         pagination:true,
-        pageSize:5,
-		pageList:[5,10,15]
+        pageSize:10,
+		pageList:[10,20,30]
     });
+    $(function(){
+        //alert(0);
+        var pager = $('#dg').datagrid().datagrid('getPager');	// get the pager of datagrid
+        pager.pagination({
+            displayMsg:'显示第 {from} 到 {to} 条记录，共 {total} 条记录'
+        });
+    });
+    function myformatter(date){
+        var y = date.getFullYear();
+        var m = date.getMonth()+1;
+        var d = date.getDate();
+        return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
+    }
 </script>

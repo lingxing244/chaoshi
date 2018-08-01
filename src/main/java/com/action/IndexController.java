@@ -2,6 +2,7 @@ package com.action;
 
 import com.entity.Bill;
 import com.entity.BillData;
+import com.entity.Provider;
 import com.entity.Users;
 import com.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,15 @@ public class IndexController {
         System.out.println("----------------hahha ");
         List<Bill> list = us.selectAllBill();
         List<Bill> slist = us.selectPageBill(page,rows);
+        for(Bill bi:slist){
+            Provider pr = bi.getProvider();
+            bi.setProname(pr.getProname());
+        }
         BillData bd = new BillData();
         bd.setTotal(list.size());
         bd.setRows(slist);
+
+        System.out.println(slist);
         js = JSON.toJSONString(bd);
         System.out.println("----------json = " +js);
 
