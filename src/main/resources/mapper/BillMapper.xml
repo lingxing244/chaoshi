@@ -40,9 +40,9 @@
        smbms_bill b INNER JOIN smbms_provider p ON b.providerId = p.id
   </select>
   <select id="selectPageBill" resultMap="BaseResultMap" parameterType="java.util.Map" >
-    select 
-    <include refid="Base_Column_List" />
-    from smbms_bill limit #{page},#{rows}
+    SELECT b.billCode,b.productName,p.proName,
+       b.totalPrice,b.isPayment,b.creationDate FROM
+       smbms_bill b INNER JOIN smbms_provider p ON b.providerId = p.id limit #{page},#{rows}
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" >
     select

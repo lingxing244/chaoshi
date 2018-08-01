@@ -38,7 +38,8 @@ public class UserService implements IUserService {
         Map<String,Object> mp = new HashMap<String,Object>();
         Integer pag = (pages-1)*row;
         mp.put("page", pag);
-        mp.put("rows", rows);
+        mp.put("rows", row);
+        System.out.println("--page = "+pag+"--rows = "+row);
         return billDao.selectPageBill(mp);
     }
 }
