@@ -1,0 +1,26 @@
+*{
+	margin:0px;
+	padding:0px;
+}
+#main{
+	width:1300px;
+	height:600px;
+	margin:0px auto;
+	position: relative;
+	background:url(../img/login_bg.jpg);
+}
+.hor{
+	background:url(../img/formBg.png);
+	background-repeat:no-repeat;
+	height: 350px;
+    width: 385px;
+    position: relative;
+    left: 375px;
+    top:130px;
+}
+.hh{
+	position: absolute;
+	left: 470px;
+	top:75px;
+	color: white;
+}

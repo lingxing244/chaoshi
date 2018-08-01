@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>超市订单管理系统</title>
+	<link rel="stylesheet" type="text/css" href="css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="css/themes/icon.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<style type="text/css">
+		.font1{
+			font: normal 12px/14px 宋体;
+			color: #808589;
+		}
+	</style>
+	</head>
+	<body>
+		<div>
+			<div id="cc" class="easyui-layout" style="width:1200px;height:600px;margin: 0px auto">   
+			    <div data-options="region:'north'" style="height:70px;padding: 0px 0px;">
+			    	<div class="container" style="padding: 0px 0px;width: 1165px;">
+			    		<div class="row" style="background-color: #5E9BDA;height: 40px;padding-top: 8px;">
+				        	<div class="col-md-4"><img src="img/buy.png" /><span>超市订单管理系统</span></div>
+				        	<div class="col-md-5"></div>
+				        	<div class="col-md-3"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下午好！<span style="color: #FFF21B;">系统管理员</span>，欢迎你！</strong><a href="javascript:void(0)"><span style="background-color: #AAE06C;padding: 3px 6px;font: normal 14px/22px 宋体;color: white;">退出</span></a></div>
+				    	</div>
+				    	<div class="row" style="background-color: #E3ECF5;height: 25px;padding-top: 5px;">
+				        	<div class="col-md-4"><img src="img/time.png" /><span class="font1">2017年8月17日09:10:25星期六</span></div>
+				        	<div class="col-md-4"></div>
+				        	<div class="col-md-4"><span class="font1" style="padding-left: 50px;">温馨提示：为了能正常浏览，请使用高版本浏览器(IE10+)</span></div>
+				    	</div>
+					</div>
+			    </div>
+			    <div class="west" data-options="region:'west'" style="width:170px;">
+			    	<div style="padding-left:17px ;"><img src="img/125g.png" /></div>
+			    	<div class="media">
+					    <div class="media-left">
+					        <img class="media-object" src="img/zd.png" alt="">
+					    </div>
+					    <div class="media-body">
+					        <p style="font: bold 14px/18px 宋体;color: #0042B8;" class="media-heading"><a href="order.html" title="订单管理" class="aaa">订单管理</a></p>
+					    </div>
+					</div>
+					<div class="media">
+					    <div class="media-left">
+					        <img class="media-object" src="img/gys.png" alt="">
+					    </div>
+					    <div class="media-body">
+					        <p style="font: bold 14px/18px 宋体;color: #0042B8;" class="media-heading"><a href="supplier.html" title="供应商管理" class="aaa">供应商管理</a></p>
+					    </div>
+					</div>
+					<div class="media">
+					    <div class="media-left">
+					        <img class="media-object" src="img/yh.png" alt="">
+					    </div>
+					    <div class="media-body">
+					        <p style="font: bold 14px/18px 宋体;color: #0042B8;" class="media-heading"><a href="user.html" title="用户管理" href="javascript:void(0)" class="aaa">用户管理</a></p>
+					    </div>
+					</div>
+					<div class="media">
+					    <div class="media-left">
+					        <img class="media-object" src="img/mm.png" alt="">
+					    </div>
+					    <div class="media-body">
+					        <p style="font: bold 14px/18px 宋体;color: #0042B8;" class="media-heading"><a href="changepassword.html" title="密码修改" href="javascript:void(0)" class="aaa">密码修改</a></p>
+					    </div>
+					</div>
+					<div class="media">
+					    <div class="media-left">
+					        <img class="media-object" src="img/tc.png" alt="">
+					    </div>
+					    <div class="media-body">
+					        <p style="font: bold 14px/18px 宋体;color: #0042B8;" class="media-heading"><a href="javascript:void(0)" class="bbb">退出系统</a></p>
+					    </div>
+					</div>
+			    </div>   
+			    <div data-options="region:'center'" style="padding:0px;">
+			    	<div id="tt" class="easyui-tabs" data-options="fit:true" style="width:500px;height:250px;">
+						<div title="系统主页" class="media" style="margin: 30px 50px;">
+						    <div class="media-left">
+						        <img class="media-object" src="img/clock.jpg" alt="">
+						    </div>
+						    <div class="media-body">
+						        <h2 class="media-heading" style="padding-top: 30px;color: #0A5EB6;">系统管理员</h2>
+						        <p style="padding-top: 10px;">欢迎来到超市管理系统！</p>
+						    </div>
+						</div>
+					</div>
+			    </div>   
+			    <div data-options="region:'south'" style="height:100px;background-color: #4287C2;">
+			    	<span style="font: bold 16px/18px 宋体;margin-left: 500px;color: white">版权所属版权所属</span>
+			    </div>
+			    <!--<iframe src='order.html' width="100%" height="100%"></iframe>-->
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$(".aaa").click(function(){
+			var text = this.href;
+			
+			//alert(this.title);
+			if($('#tt').tabs("exists",this.title)){
+			//存在则选中
+				//alert("存在了");
+				$('#tt').tabs("select",this.title);			
+			}else{
+				//alert("不存在了");
+				$('#tt').tabs('add',{    
+				    title:this.title,    
+				    closable:true,    
+				    content:"<iframe src='"+text+"'title='"+this.title+"' width='100%' height='100%' frameborder='0'></iframe>"
+				}); 
+				
+			}
+			return false;
+		});
+	});
+</script>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/themes/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="css/themes/icon.css" />
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+		<style>
+			.cl{
+				border-left: 1px solid #E7EBEE;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<div style="border: 1px solid #E6EAF6;padding-left:22px;height: 26px;"><img src="img/home.png" style="vertical-align: middle;margin-right: 10px;"/>你现在所在的位置是：<span style="color:#2179A9;">订单管理页面</span></div>
+			<!--form表单-->
+			<div >
+				<form id="ff" method="post">
+					<div class="container" style="margin: 0px 0px;width: 100%;">
+			    		<div class="row" style="height: 40px;background-color:#F6FAFD;padding-top:8px ;">
+				        	<div class="col-md-9">
+				        		商品名称：<input class="easyui-textbox" style="margin: 0px 10px;" type="text" name="name">
+				        		供应商：<select class="easyui-combobox" style="margin: 0px 10px;" name="language"><option value="ar">-请选择-</option></select>
+								是否付款：<select class="easyui-combobox" style="margin: 0px 10px;" name="language"><option value="ar">-请选择-</option></select>
+				        		<span><img src="img/lalas.png" /></span>
+				        	</div>
+				        	<div class="col-md-1"></div>
+				        	<div class="col-md-2"><img style="padding-left: 30px;" src="img/ksjd5.png" /></div>
+				    	</div>
+					</div>
+				</form>
+			</div>
+			<!--订单信息详情-->
+			<table id="dg"></table>
+		</div>
+	</body>
+</html>
+<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+<script type="text/javascript">
+	alert(111);
+    $('#dg').datagrid({
+        url:'selectAll',
+        columns:[[
+            {field:'billcode',title:'订单编号',width:100},
+            {field:'productname',title:'商品名称',width:100},
+            {field:'proname',title:'供应商',width:100,align:'right'}
+        ]]
+    });
+</script>
