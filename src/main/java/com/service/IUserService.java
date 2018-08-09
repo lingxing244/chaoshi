@@ -9,7 +9,9 @@ public interface IUserService {
 
     List<Users> selectAll();
 
-    List<Bill> selectAllBill();
+    List<Bill> selectAllBill(Bill bill);
 
-    List<Bill> selectPageBill(String page,String rows);
+    List<Bill> selectPageBill(String page,String rows,Bill bill);
+
+    Users selectUser(Users user);
 }

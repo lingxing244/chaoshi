@@ -7,8 +7,12 @@ import java.util.Map;
 
 public interface IBillDao {
 
-    List<Bill> selectAll();
+    List<Bill> selectAll(Bill bill);
 
     List<Bill> selectPageBill(Map<String,Object> mp);
+
+    Integer delBill(String billcode);
+
+    Integer innertBill(Bill bill);
 
 }

@@ -19,11 +19,22 @@
     id, proCode, proName, proDesc, proContact, proPhone, proAddress, proFax, createdBy, 
     creationDate, modifyDate, modifyBy
   </sql>
+  <select id="selectProId" resultType="java.lang.Long" parameterType="java.lang.String" >
+    select
+    id
+    from smbms_provider
+    where proName = #{proname}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from smbms_provider
     where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from smbms_provider
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from smbms_provider

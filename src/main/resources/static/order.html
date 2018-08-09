@@ -13,24 +13,32 @@
 		</style>
 	</head>
 	<body style="margin:0;padding:0">
-		<div>
+		<div id="content" style="height: 400px" >
 			<div style="border: 1px solid #E6EAF6;padding-left:22px;height: 26px;"><img src="img/home.png" style="vertical-align: middle;margin-right: 10px;"/>你现在所在的位置是：<span style="color:#2179A9;">订单管理页面</span></div>
 			<!--form表单-->
 			<div >
-				<form id="ff" method="post">
 					<div class="container" style="margin: 0px 0px;width: 100%;">
 			    		<div class="row" style="height: 40px;background-color:#F6FAFD;padding-top:8px ;">
-				        	<div class="col-md-9">
-				        		商品名称：<input class="easyui-textbox" style="margin: 0px 10px;" type="text" name="name">
-				        		供应商：<select class="easyui-combobox" style="margin: 0px 10px;" name="language"><option value="ar">-请选择-</option></select>
-								是否付款：<select class="easyui-combobox" style="margin: 0px 10px;" name="language"><option value="ar">-请选择-</option></select>
-				        		<span><img src="img/lalas.png" /></span>
-				        	</div>
-				        	<div class="col-md-1"></div>
-				        	<div class="col-md-2"><img style="padding-left: 30px;" src="img/ksjd5.png" /></div>
+							<form id="ff" method="post">
+								<div class="col-md-10">
+									商品名称：<input class="easyui-textbox" style="margin: 0px 10px; width: 120px" type="text" name="productname">
+									供应商：<select style="margin: 0px 10px;" name="proname">
+												<option value="">-请选择-</option>
+											</select>
+									是否付款：<select class="easyui-combobox" style="margin: 0px 10px;width: 100px" name="ispayment">
+												<option value="">-请选择-</option>
+												<option value="1">未付款</option>
+												<option value="2">已付款</option>
+											  </select>
+									<span id = "query"><img src="img/lalas.png" /></span>
+								</div>
+							</form>
+							<form id="gg" method="post">
+				        		<div class="col-md-2"><span id="add" style="cursor: hand"><img style="padding-left: 30px;" src="img/ksjd5.png" /></span></div>
+							</form>
 				    	</div>
 					</div>
-				</form>
+
 			</div>
 			<!--订单信息详情-->
 			<div style="height: 350px">
@@ -42,16 +50,70 @@
 <script type="text/javascript" src="js/jquery-1.12.4.js"></script>
 <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
 <script type="text/javascript">
+    $("#add").click(function () {
+        var node = $("#content");
+        node.empty();
+        node.append("<iframe src='addorder.html' width='100%' frameborder='0' scrolling='no' id='test' onload='this.height=400'></iframe>")
+    })
+	$(function(){
+	    $("#query").click(function () {
+	        var name = ($("[name='productname']").val());
+	        var pro = ($("[name='proname']").val());
+	        var ment = ($("[name='ispayment']").val());
+            $('#dg').datagrid('load', {
+                productname:name,
+                proname: pro,
+                ispayment:ment
+            });
+        });
+	});
+    $(function(){
+        $.post('getProname',{},function (data){
+			//alert(data);
+            var snode =  $("[name='proname']");
+
+            if(data.length > 0){
+                // 循环
+                $.each(data,function(i,n){
+                    //alert(n.proname);
+                    var tnode = "<option value='"+n.proname+"'>"+n.proname+"</option>";
+                    //alert(tnode);
+                    tnode = $(tnode);
+                    snode.append(tnode);
+                });
+            }
+		} ,'JSON')
+    });
     $('#dg').datagrid({
         url:'selectAll',
 		fit:true,
         fitColumns:true,
         columns:[[
-            {field:'billcode',title:'订单编号',align:'center'},
-            {field:'productname',title:'商品名称',width:100,align:'center'},
-            {field:'proname',title:'供应商',width:150,align:'center'},
-            {field:'totalprice',title:'订单金额',align:'center'},
-            {field:'ispayment',title:'是否付款',align:'center'},
+			{field:'id',checkbox:true},
+            {field:'billcode',title:'订单编号',align:'center',editor:'text'},
+            {field:'productname',title:'商品名称',width:100,align:'center',editor:'text'},
+            {field:'proname',title:'供应商',width:150,align:'center',editor:'text'},
+            {field:'totalprice',title:'订单金额',align:'center',editor:'numberbox'},
+            {field: 'ispayment', title: '是否付款', width:60,align: 'center', formatter: function (value) {
+                if (value == 1) {
+                    return "未付款";
+                } else {
+                    return "已付款";
+                }
+            }, editor: {
+                type: 'combobox',
+                options: {
+                    required: true,
+                    editable: false,
+					data:[
+                        {'value':'1','text':'未付款'},
+                        {'value':'2','text':'已付款'}
+					],
+                    valueField:'value',
+                    textField:'text'
+                }
+            }
+            },
             {field:'creationdate',title:'创建时间',width:100,align:'center',formatter:function(value,row,index){
                 var dt = new Date(value);
                 var ds = myformatter(dt);
@@ -61,20 +123,57 @@
             {field:'action',title:'操作',width:150,align:'center',
 					formatter:function(value,row,index){
                 		if(row.editing){
-
+                            var s = '<a href="javascript:void(0)" onclick="saverow('+index+')">保存</a> ';
+                            var c = '<a href="javascript:void(0)" onclick="cancelrow('+index+')">放弃</a>';
+                            return s+c;
 						}else {
-                            var e = '<a href="javascript:void(0)" onclick="editrow('+index+')"><img src="img/read.png"></a> ';
-                            var d = '<a href="javascript:void(0)" onclick="editrow('+index+')"><img src="img/xiugai.png"></a> ';
+                            var e = '<a href="javascript:void(0)" onclick="details('+index+')"><img src="img/read.png"></a> ';
+                            var d = '<a href="javascript:void(0)" onclick="edit('+index+')"><img src="img/xiugai.png"></a> ';
                             var c = '<a href="javascript:void(0)" onclick="deleterow('+index+')"><img src="img/schu.png"></a>';
                             return e+d+c;
 						}
 					}
 			}
         ]],
+		onBeforeEdit:function(index,row){
+            row.editing = true;
+            //重新刷新行
+            $('#dg').datagrid('refreshRow', index);
+        },
+        onAfterEdit:function(index,row){
+            row.editing = false;
+            //alert(row.productid);
+            //alert(row);
+            var jstr = JSON.stringify(row);//对象转 json string
+            //alert(jstr);
+            var sobj = JSON.parse(jstr); //json string 转 对象
+            //alert(typeof(sobj.creationdate));
+            var dt = new Date(sobj.creationdate);//转 js 的时间
+            var ds = myformatter(dt);
+            sobj.creationdate = ds ;
+            sobj.provider.creationdate = ds ;
+            alert(JSON.stringify(sobj));
+            $.post('updateBill',sobj,function(data){
+                if(data == 'true'){
+                    $('#dg').datagrid('refreshRow', index);
+                }
+            });
+            //重新刷新行
+            //$('#dg').datagrid('refreshRow', index);
+        },
         pagination:true,
         pageSize:10,
 		pageList:[10,20,30]
     });
+    function edit(index){
+        //alert(222);
+        $('#dg').datagrid('beginEdit', index);
+	}
+	function details(index) {
+        var rows = $('#dg').datagrid('getRows');
+        var id = rows[index].billcode;
+        alert("11"+id);
+    }
     $(function(){
         //alert(0);
         var pager = $('#dg').datagrid().datagrid('getPager');	// get the pager of datagrid
@@ -88,4 +187,30 @@
         var d = date.getDate();
         return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
     }
+    function saverow(index){
+        // 结束编辑
+        $('#dg').datagrid('endEdit', index);
+    }
+    function deleterow(index){
+        var rows = $('#dg').datagrid('getRows');
+        $.messager.confirm('comfirm','你确定要删除【'+rows[index].billcode+'】订单吗?',function (r) {
+			if(r){
+                // 得到所有行
+
+                //alert(rows.length);
+                // 根据下标拿当前行的数据
+                var did2 = rows[index].billcode ;
+                //alert(did2);
+                // 发送ajax
+                $.post('delBill',{billcode:did2},function(data){
+                    //alert(data);
+                    if(data == 'true'){
+                        // 删除1行，发命令
+                        $('#dg').datagrid('deleteRow', index);
+                        $('#dg').datagrid.refreshRow();
+                    }
+                });
+			}
+        })
+	}
 </script>

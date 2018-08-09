@@ -25,12 +25,18 @@
     <include refid="Base_Column_List" />
     from smbms_user
   </select>
-
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.entity.Users" >
+    select
     <include refid="Base_Column_List" />
     from smbms_user
     where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectUser" resultMap="BaseResultMap" parameterType="com.entity.Users" >
+    select 
+    <include refid="Base_Column_List" />
+    from smbms_user
+    where userCode = #{usercode,jdbcType=VARCHAR} AND
+    userpassword = #{userpassword,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from smbms_user

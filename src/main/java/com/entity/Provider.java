@@ -1,5 +1,7 @@
 package com.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Provider {
@@ -98,7 +100,7 @@ public class Provider {
     public void setCreatedby(Long createdby) {
         this.createdby = createdby;
     }
-
+    @DateTimeFormat( pattern = "yyyy-MM-dd")
     public Date getCreationdate() {
         return creationdate;
     }

@@ -34,38 +34,59 @@
     id, billCode, productName, productDesc, productUnit, productCount, totalPrice, isPayment, 
     createdBy, creationDate, modifyBy, modifyDate, providerId
   </sql>
-  <select id="selectAll" resultMap="BaseResultMap" >
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.entity.Bill">
        SELECT b.billCode,b.productName,p.proName,
        b.totalPrice,b.isPayment,b.creationDate FROM
        smbms_bill b INNER JOIN smbms_provider p ON b.providerId = p.id
+      <where>
+        <if test="ispayment!=null">
+          isPayment = #{ispayment,jdbcType=INTEGER}
+        </if>
+        <if test="proname!=null and proname!=''">
+          AND proName = #{proname,jdbcType=VARCHAR}
+        </if>
+        <if test="productname!=null and productname!=''">
+          AND productName LIKE #{productname,jdbcType=VARCHAR}
+        </if>
+      </where>
   </select>
   <select id="selectPageBill" resultMap="BaseResultMap" parameterType="java.util.Map" >
     SELECT b.billCode,b.productName,p.proName,
        b.totalPrice,b.isPayment,b.creationDate FROM
-       smbms_bill b INNER JOIN smbms_provider p ON b.providerId = p.id limit #{page},#{rows}
+       smbms_bill b INNER JOIN smbms_provider p ON b.providerId = p.id
+    <where>
+      <if test="ispayment!=null">
+        isPayment = #{ispayment,jdbcType=INTEGER}
+      </if>
+      <if test="proname!=null and proname!=''">
+        AND proName = #{proname,jdbcType=VARCHAR}
+      </if>
+      <if test="productname!=null and productname!=''">
+        AND productName LIKE #{productname,jdbcType=VARCHAR}
+      </if>
+    </where>
+    limit #{page},#{rows}
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
     from smbms_bill
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="delBill" parameterType="java.lang.String" >
     delete from smbms_bill
-    where id = #{id,jdbcType=BIGINT}
+    where billCode = #{billCode,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.entity.Bill" >
-    insert into smbms_bill (id, billCode, productName, 
+  <insert id="innertBill" parameterType="com.entity.Bill" >
+    insert into smbms_bill (billCode, productName,
       productDesc, productUnit, productCount, 
-      totalPrice, isPayment, createdBy, 
-      creationDate, modifyBy, modifyDate, 
+      totalPrice, isPayment, createdBy,creationdate,
       providerId)
-    values (#{id,jdbcType=BIGINT}, #{billcode,jdbcType=VARCHAR}, #{productname,jdbcType=VARCHAR}, 
+    values (#{billcode,jdbcType=VARCHAR}, #{productname,jdbcType=VARCHAR},
       #{productdesc,jdbcType=VARCHAR}, #{productunit,jdbcType=VARCHAR}, #{productcount,jdbcType=DECIMAL}, 
-      #{totalprice,jdbcType=DECIMAL}, #{ispayment,jdbcType=INTEGER}, #{createdby,jdbcType=BIGINT}, 
-      #{creationdate,jdbcType=TIMESTAMP}, #{modifyby,jdbcType=BIGINT}, #{modifydate,jdbcType=TIMESTAMP}, 
+      #{totalprice,jdbcType=DECIMAL}, #{ispayment,jdbcType=INTEGER}, #{createdby,jdbcType=BIGINT},now(),
       #{providerid,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.entity.Bill" >
+  <insert id="inert" parameterType="com.entity.Bill" >
     insert into smbms_bill
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -96,7 +117,7 @@
         createdBy,
       </if>
       <if test="creationdate != null" >
-        creationDate,
+        now(),
       </if>
       <if test="modifyby != null" >
         modifyBy,

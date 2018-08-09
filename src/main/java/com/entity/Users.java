@@ -132,4 +132,22 @@ public class Users {
     public void setModifydate(Date modifydate) {
         this.modifydate = modifydate;
     }
+
+    public String toString() {
+        return "Users{" +
+                "id=" + id +
+                ", usercode='" + usercode + '\'' +
+                ", username='" + username + '\'' +
+                ", userpassword='" + userpassword + '\'' +
+                ", gender=" + gender +
+                ", birthday=" + birthday +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", userrole=" + userrole +
+                ", createdby=" + createdby +
+                ", creationdate=" + creationdate +
+                ", modifyby=" + modifyby +
+                ", modifydate=" + modifydate +
+                '}';
+    }
 }

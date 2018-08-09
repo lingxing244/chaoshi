@@ -27,19 +27,25 @@ public class UserService implements IUserService {
         return usersDao.selectAll();
     }
 
-    public List<Bill> selectAllBill() {
-        return billDao.selectAll();
+    public List<Bill> selectAllBill(Bill bill) {
+        return billDao.selectAll(bill);
     }
 
-
-    public List<Bill> selectPageBill(String page, String rows) {
+    public List<Bill> selectPageBill(String page, String rows, Bill bill) {
         Integer pages = Integer.parseInt(page);
         Integer row = Integer.parseInt(rows);
         Map<String,Object> mp = new HashMap<String,Object>();
         Integer pag = (pages-1)*row;
         mp.put("page", pag);
         mp.put("rows", row);
+        mp.put("productname",bill.getProductname());
+        mp.put("ispayment",bill.getIspayment());
+        mp.put("proname",bill.getProname());
         System.out.println("--page = "+pag+"--rows = "+row);
         return billDao.selectPageBill(mp);
+    }
+
+    public Users selectUser(Users user) {
+        return usersDao.selectUser(user);
     }
 }
